@@ -1,0 +1,47 @@
+# Copyright (C) 2013 TODO
+# This file is distributed under the same license as the TODO package.
+msgid ""
+msgstr ""
+"Project-Id-Version: SimpleChimp 0.2.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/plugins/plugin-name\n"
+"POT-Creation-Date: 2013-11-10 21:53+0100\n"
+"PO-Revision-Date: 2013-11-10 21:55+0100\n"
+"Last-Translator: FULL NAME <email@example.com>\n"
+"Language-Team: LANGUAGE <translations@example.com >\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;"
+"esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: class-simplechimp.php:72 class-simplechimp.php:74
+msgid "E-mail"
+msgstr ""
+
+#: class-simplechimp.php:73
+msgid "Subscribe"
+msgstr ""
+
+#: class-simplechimp.php:77
+msgid "An error occurred."
+msgstr ""
+
+#: class-simplechimp.php:78
+msgid "An error occurred, try reloading the page."
+msgstr ""
+
+#: class-simplechimp.php:79
+msgid "Invalid email address."
+msgstr ""
+
+#: class-simplechimp.php:80
+msgid "Already subscribed."
+msgstr ""
+
+#: class-simplechimp.php:81
+msgid "Thank you for subscribing."
+msgstr ""
