@@ -15,7 +15,7 @@ The plugin has no settings page. To specify your Mailchimp API key and list id, 
 	}
 
 
-##Showing the form in your theme
+##Display the subscription form
 
 SimpleChimp adds an [action hook](http://codex.wordpress.org/Glossary#Action) which displays the subscription form.
 
