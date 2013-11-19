@@ -62,12 +62,23 @@ class SimpleChimp {
 	/**
 	 * Initialize the plugin by setting options, localization, actions and filters.
 	 *
+	 * As there is no settings page for the plugin, add your api_key and list_id via
+	 * adding a filter to 'simplechimp_options', eg. in your functions.php file:
+	 *
+	 * add_filter( 'simplechimp_options', 'myprefix_filter_options', 9999 );
+	 *
+	 * public function myprefix_filter_options( $options ) {
+	 * 	$options['list_id'] = 'yourlistid';
+	 *  $options['api_key'] = 'yourapikey';
+	 *  return $options;
+	 * }
+	 *
 	 * @since     0.1.0
 	 */
 	private function __construct() {
 		$defaults = array(
-			'api_key' => 'b1267dc0d8652cd32c733c79a3e47487-us1',
-			'list_id' => 'a65826d30a',
+			'api_key' => '',
+			'list_id' => '',
 			'labels'  => array(
 				'label'       => __( 'E-mail', 'simplechimp' ),
 				'submit'      => __( 'Subscribe', 'simplechimp' ),
