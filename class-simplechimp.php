@@ -171,7 +171,7 @@ class SimpleChimp {
 	}
 
 	/**
-	 * Handle non-AJAX subscription.
+	 * Handle subscription form submit.
 	 *
 	 * @since  0.2.0
 	 * @return void
