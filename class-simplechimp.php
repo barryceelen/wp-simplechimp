@@ -67,7 +67,7 @@ class SimpleChimp {
 	 *
 	 * add_filter( 'simplechimp_options', 'myprefix_filter_options', 9999 );
 	 *
-	 * public function myprefix_filter_options( $options ) {
+	 * function myprefix_filter_options( $options ) {
 	 * 	$options['list_id'] = 'yourlistid';
 	 *  $options['api_key'] = 'yourapikey';
 	 *  return $options;
