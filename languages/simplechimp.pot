@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SimpleChimp 0.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/plugins/plugin-name\n"
-"POT-Creation-Date: 2013-11-10 21:53+0100\n"
-"PO-Revision-Date: 2013-11-10 21:55+0100\n"
+"POT-Creation-Date: 2013-12-02 16:55+0100\n"
+"PO-Revision-Date: 2013-12-02 16:56+0100\n"
 "Last-Translator: FULL NAME <email@example.com>\n"
 "Language-Team: LANGUAGE <translations@example.com >\n"
 "MIME-Version: 1.0\n"
@@ -18,30 +18,30 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: class-simplechimp.php:72 class-simplechimp.php:74
+#: class-simplechimp.php:75 class-simplechimp.php:77
 msgid "E-mail"
 msgstr ""
 
-#: class-simplechimp.php:73
+#: class-simplechimp.php:76
 msgid "Subscribe"
 msgstr ""
 
-#: class-simplechimp.php:77
+#: class-simplechimp.php:80
 msgid "An error occurred."
 msgstr ""
 
-#: class-simplechimp.php:78
+#: class-simplechimp.php:81
 msgid "An error occurred, try reloading the page."
 msgstr ""
 
-#: class-simplechimp.php:79
+#: class-simplechimp.php:82
 msgid "Invalid email address."
 msgstr ""
 
-#: class-simplechimp.php:80
+#: class-simplechimp.php:83
 msgid "Already subscribed."
 msgstr ""
 
-#: class-simplechimp.php:81
+#: class-simplechimp.php:84
 msgid "Thank you for subscribing."
 msgstr ""
