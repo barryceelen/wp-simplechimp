@@ -62,8 +62,13 @@ class SimpleChimp {
 	/**
 	 * Initialize the plugin by setting options, localization, actions and filters.
 	 *
-	 * The MailChimp API translations are not always, well, satisfactory, so response messages
-	 * are currently defined in the plugin in stead of passing the MailChimp messages.
+	 * There is no settings page for the plugin, add your api_key and list_id via
+	 * adding a filter to 'simplechimp_options'.
+	 *
+	 * @see https://gist.github.com/barryceelen/7619021
+	 *
+	 * Response messages are currently defined in the plugin in stead of passing the MailChimp messages
+	 * because the MailChimp API translations are not always satisfactory.
 	 *
 	 * @todo Allow using the default MailChimp API messages.
 	 *
