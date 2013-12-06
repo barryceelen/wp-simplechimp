@@ -12,9 +12,9 @@
 					_this.form.toggleClass('simplechimp-loading');
 					$.post( simplechimpVars.ajaxurl,
 						{
-							nonce: simplechimpVars.nonce,
-							email: _this.form.find('input.simplechimp-email').val(),
-							action: simplechimpVars.action
+							action: simplechimpVars.action,
+							simplechimp_subscribe: _this.form.find('input[name="simplechimp_subscribe"]').val(),
+							simplechimp_email: _this.form.find('input[name="simplechimp_email"]').val()
 						},
 						function( response ) {
 							_this.toggleSubmitButton();
@@ -25,7 +25,7 @@
 				});
 			},
 			toggleSubmitButton: function() {
-				var button = this.form.find('.simplechimp-submit');
+				var button = this.form.find('button[type="submit"]');
 				if ( button.attr('disabled') == 'disabled' ) {
 					button.removeAttr( 'disabled' );
 				} else {

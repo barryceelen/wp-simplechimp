@@ -53,11 +53,6 @@ class MailChimp {
 		$args['sslverify'] = $this->verify_ssl;
 		$url = $this->api_endpoint.'/'.$method.'.json';
 		$response = wp_remote_post( $url, $args );
-
-		if ( ! is_wp_error( $response ) ) {
-			$response = json_decode( wp_remote_retrieve_body( $response ), true );
-		}
-
 		return $response;
 	}
 
