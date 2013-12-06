@@ -180,7 +180,6 @@ class SimpleChimp {
 	public function subscription_form_submit() {
 
 		if ( empty( $_POST['simplechimp_email'] ) ) {
-			die('bla');
 			return false;
 		}
 

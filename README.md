@@ -1,9 +1,9 @@
 SimpleChimp
 ===========
 
-Basic [MailChimp](http://mailchimp.com) subscription form for WordPress themes.
+Basic [MailChimp](http://mailchimp.com) subscription form for WordPress.
 
-The plugin has no settings page. To specify your Mailchimp API key and list id, add a filter to 'simplechimp_options' in your theme's functions file:
+The plugin has no settings page. To specify your Mailchimp API key and list id, add a filter to 'simplechimp_options', eg. via the [SimpleChimp Options](https://gist.github.com/barryceelen/7619021) plugin.
 
 
 	add_filter( 'simplechimp_options', 'myprefix_filter_options', 9999 );
@@ -13,7 +13,6 @@ The plugin has no settings page. To specify your Mailchimp API key and list id, 
 		$options['api_key'] = 'yourapikey';
 		return $options;
 	}
-
 
 ##Display the subscription form
 
