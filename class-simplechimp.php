@@ -1,28 +1,18 @@
 <?php
 /**
+ * Contains plugin class
+ *
  * @package   SimpleChimp
  * @author    Barry Ceelen <b@rryceelen.com>
- * @license   GPL-2.0+
- * @link      https://github.com/barryceelen/simplechimp
+ * @license   GPL-3.0+
+ * @link      https://github.com/barryceelen/wp-simplechimp
  * @copyright 2013 Barry Ceelen
  */
 
 /**
  * Plugin class.
- *
- * @package SimpleChimp
- * @author  Barry Ceelen <b@rryceelen.com>
  */
 class SimpleChimp {
-
-	/**
-	 * Instance of this class.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var object
-	 */
-	protected static $instance = null;
 
 	/**
 	 * Plugin version, used for cache-busting of style and script file references.
@@ -34,13 +24,13 @@ class SimpleChimp {
 	const VERSION = '0.2.0';
 
 	/**
-	 * Filterable options.
+	 * Instance of this class.
 	 *
 	 * @since 0.1.0
 	 *
-	 * @var array
+	 * @var object
 	 */
-	public static $options = array();
+	protected static $instance = null;
 
 	/**
 	 * Return an instance of this class.
@@ -50,12 +40,10 @@ class SimpleChimp {
 	 * @return object A single instance of this class.
 	 */
 	public static function get_instance() {
-
 		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self;
 		}
-
 		return self::$instance;
 	}
 
@@ -75,44 +63,34 @@ class SimpleChimp {
 	 * @since 0.1.0
 	 */
 	private function __construct() {
-		$defaults = array(
-			'api_key' => '',
-			'list_id' => '',
-			'labels'  => array(
-				'label'       => __( 'E-mail', 'simplechimp' ),
-				'submit'      => __( 'Subscribe', 'simplechimp' ),
-				'placeholder' => __( 'E-mail', 'simplechimp' )
-			),
-			'messages' => array(
-				'error'         => __( 'An error occurred.', 'simplechimp' ),
-				'error_nonce'   => __( 'An error occurred, try reloading the page.', 'simplechimp' ),
-				'invalid_email' => __( 'Invalid email address.', 'simplechimp' ),
-				'already'       => __( 'Already subscribed.', 'simplechimp' ),
-				'success'       => __( 'Thank you for subscribing.', 'simplechimp' )
-			)
+
+		$this->messages = array(
+			'error'         => __( 'An error occurred.', 'simplechimp' ),
+			'error_nonce'   => __( 'An error occurred, try reloading the page.', 'simplechimp' ),
+			'invalid_email' => __( 'Invalid email address.', 'simplechimp' ),
+			'already'       => __( 'Already subscribed.', 'simplechimp' ),
+			'success'       => __( 'Thank you for subscribing.', 'simplechimp' )
 		);
 
-		self::$options = apply_filters( 'simplechimp_options', $defaults );
-
-		// Load plugin text domain
+		// Load plugin text domain.
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
-		// Register query vars
+		// Register query vars.
 		add_filter( 'query_vars', array( $this, 'query_vars' ) );
 
 		// Load public-facing JavaScript.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		// Handle subscription request
+		// Handle subscription request.
 		if ( isset( $_POST['simplechimp-submit'] ) ) {
 			add_action( 'template_redirect', array( $this, 'subscription_form_submit' ) );
 		}
 
-		// Add ajax handlers
+		// Add ajax handlers.
 		add_action( 'wp_ajax_simplechimp_subscribe', array( $this, 'subscription_form_submit' ) );
 		add_action( 'wp_ajax_nopriv_simplechimp_subscribe', array( $this, 'subscription_form_submit' ) );
 
-		// Register action used for displaying the form
+		// Register do_action used for displaying the form.
 		add_action( 'simplechimp', array( $this, 'form' ) );
 	}
 
@@ -162,8 +140,8 @@ class SimpleChimp {
 			'simplechimpVars',
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'action' => 'simplechimp_subscribe'
-				)
+				'action' => 'simplechimp_subscribe',
+			)
 		);
 	}
 
@@ -172,10 +150,9 @@ class SimpleChimp {
 	 *
 	 * Redirects if not doing ajax, else echoes message.
 	 *
-	 * @since 0.2.0
-	 * @return void
+	 * @todo Display actual MailChimp error message if WP_DEBUG is true.
 	 *
-	 * @todo Display actual MailChimp error message if WP_DEBUG is true
+	 * @since 0.2.0
 	 */
 	public function subscription_form_submit() {
 
@@ -184,17 +161,26 @@ class SimpleChimp {
 		}
 
 		if ( ! wp_verify_nonce( $_POST['simplechimp_subscribe'], 'simplechimp_subscribe' ) ) {
+
 			$args['subscribe'] = 'error_nonce';
+
 		} elseif ( ! is_email( $_POST['simplechimp_email'] ) ) {
+
 			$args['subscribe'] = 'invalid_email';
 			$args['email'] = urlencode( $_POST['simplechimp_email'] );
+
 		} else {
+
 			$subscribe = $this->subscribe( $_POST['simplechimp_email'] );
+
 			if ( is_wp_error( $subscribe ) ) {
+
 				$args['subscribe'] = $subscribe->get_error_code();
+
 				if ( 'already' == $subscribe->get_error_code() ) {
 					$args['email'] = urlencode( $subscribe->get_error_message() );
 				}
+
 			} else {
 				$args['subscribe'] = 'success';
 			}
@@ -203,7 +189,18 @@ class SimpleChimp {
 		$doing_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
 
 		if ( $doing_ajax ) {
-			die( self::$options['messages'][ $args['subscribe'] ] );
+			/**
+			 * Status messages.
+			 *
+			 * @var array
+			 */
+			$messages = apply_filters( 'simplechimp_messages', $this->messages );
+			if ( 'success' === $args['subscribe'] ) {
+				wp_send_json_success( $messages[ $args['subscribe'] ] );
+			} else {
+				wp_send_json_error( $messages[ $args['subscribe'] ] );
+			}
+
 		} else {
 			wp_safe_redirect( add_query_arg( $args ) );
 			exit;
@@ -213,31 +210,81 @@ class SimpleChimp {
 	/**
 	 * MailChimp API subscription request.
 	 *
+	 * @since 0.1.0
+	 *
 	 * @param string $email Email address
 	 * @return true|WP_Error Returns true if subscribed, else returns WP_Error object
-	 * @since 0.1.0
 	 */
 	public function subscribe( $email ) {
 
-		$request_body = array(
-			'id'    => self::$options['list_id'],
-			'email' => array( 'email' => $email )
+		/**
+		 * Mailchimp API Key.
+		 *
+		 * @var string
+		 */
+		$api_key = apply_filters( 'simplechimp_api_key', '' );
+		$api_key = trim( $api_key );
+
+		if ( ! $api_key ) {
+			return new WP_Error( 'error', __( 'API Key not defined', 'simplechimp' ) );
+		}
+
+		/**
+		 * Mailchimp API Key.
+		 *
+		 * @var string
+		 */
+		$list_id = apply_filters( 'simplechimp_list_id', '' );
+		$list_id = trim( $list_id );
+
+		if ( ! $list_id ) {
+			return new WP_Error( 'error', __( 'List ID not defined', 'simplechimp' ) );
+		}
+
+		$body = json_encode([
+			'email_address' => $email,
+			'status'        => 'pending',
+		]);
+
+		$datacenter    = explode( '-', $api_key );
+		$datacenter    = empty( $datacenter[1] ) ? 'us1' : $datacenter[1];
+		$member_id     = md5( strtolower( $email ) );
+
+		$url = sprintf(
+			'https://%s.api.mailchimp.com/3.0/lists/%s/members/%s',
+			$datacenter,
+			$list_id,
+			$member_id
 		);
 
-		require_once( 'inc/class-mailchimp-api.php' );
-		$mailchimp = new MailChimp( self::$options['api_key'] );
-		$response = $mailchimp->call( 'lists/subscribe', $request_body );
+		$args = array(
+			'method'      => 'PUT',
+			'timeout'     => 5,
+			'redirection' => 5,
+			'httpversion' => '1.1',
+			'user-agent'  => 'SimpleChimp WordPress Plugin/' . get_bloginfo( 'url' ),
+			'headers'     => array( 'Authorization' => 'apikey ' . $api_key ),
+			'body'        => $body
+		);
+
+		$response = wp_remote_post( $url, $args );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
 
-		if ( 200 != wp_remote_retrieve_response_code( $response ) ) {
-			$response_body = json_decode( wp_remote_retrieve_body( $response ), true );
-			if ( 214 == $response_body['code'] ) {
-				return new WP_Error( 'already', $email );
+		$response_code = wp_remote_retrieve_response_code( $response );
+		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( 200 != $response_code ) {
+
+			if ( 214 == $response_code ) { // Currently unused by this plugin.
+
+				return new WP_Error( 'already', esc_html( $email ) );
+
 			} else {
-				return new WP_Error( 'error', $response_body['error'] );
+
+				return new WP_Error( 'error', esc_html( $response_body->detail ) );
 			}
 		}
 
@@ -247,24 +294,45 @@ class SimpleChimp {
 	/**
 	 * Display subscription form
 	 *
-	 * @return string
 	 * @since 0.1.0
+	 *
+	 * @return string
 	 */
 	public function form( $id = false ) {
-		$id = ( $id ) ? 'id="' . esc_attr( $id ) . '"' : '';
-		$action = esc_attr( remove_query_arg( array( 'subscribe', 'email' ) ) );
-		$key   = get_query_var( 'subscribe' );
-		$class = '';
-		$style = ' style="display:none;"';
-		$message = '';
-		$value = esc_attr( get_query_var( 'email' ) );
 
-		if ( array_key_exists( $key, self::$options['messages'] ) ) {
-			$class = ( 'success' == $key ) ? '' : ' error';
-			$style = '';
-			$message = self::$options['messages'][$key];
+		$labels = array(
+			'label'       => __( 'E-mail', 'simplechimp' ),
+			'submit'      => __( 'Subscribe', 'simplechimp' ),
+			'placeholder' => __( 'E-mail', 'simplechimp' )
+		);
+
+		/**
+		 * Labels for the subscription form.
+		 *
+		 * @var array
+		 */
+		$labels = apply_filters( 'simplechimp_labels', $labels );
+
+		/** This filter is documented in class-simplechimp.php */
+		$messages = apply_filters( 'simplechimp_messages', $this->messages );
+
+		$id      = ( $id ) ? 'id="' . esc_attr( $id ) . '"' : '';
+		$action  = esc_attr( remove_query_arg( array( 'subscribe', 'email' ) ) );
+		$key     = get_query_var( 'subscribe' );
+		$class   = '';
+		$style   = ' style="display:none;"';
+		$message = '';
+		$value   = esc_attr( get_query_var( 'email' ) );
+
+		if ( array_key_exists( $key, $messages ) ) {
+			$class   = ( 'success' == $key ) ? '' : ' error';
+			$style   = '';
+			$message = $messages[$key];
 		}
 
-		require( plugin_dir_path( __FILE__ ) . 'views/subscription-form.php' );
+		require( plugin_dir_path( __FILE__ ) . 'templates/subscription-form.php' );
 	}
 }
+
+global $simplechimp;
+$simplechimp = SimpleChimp::get_instance();
