@@ -1,0 +1,47 @@
+# Copyright (C) 2013 TODO
+# This file is distributed under the same license as the TODO package.
+msgid ""
+msgstr ""
+"Project-Id-Version: SimpleChimp 0.2.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/plugins/plugin-name\n"
+"POT-Creation-Date: 2019-07-25 23:57+0200\n"
+"PO-Revision-Date: 2019-07-25 23:59+0200\n"
+"Language-Team: translations@example.com \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Last-Translator: \n"
+"Language: pl\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: class-simplechimp.php:75 class-simplechimp.php:77
+msgid "E-mail"
+msgstr "E-mail "
+
+#: class-simplechimp.php:76
+msgid "Subscribe"
+msgstr "Zaprenumeruj"
+
+#: class-simplechimp.php:80
+msgid "An error occurred."
+msgstr "Wystąpił błąd."
+
+#: class-simplechimp.php:81
+msgid "An error occurred, try reloading the page."
+msgstr "Wystąpił błąd, spróbuj ponownie załadować stronę."
+
+#: class-simplechimp.php:82
+msgid "Invalid email address."
+msgstr "Nie ważny adres e-mailowy"
+
+#: class-simplechimp.php:83
+msgid "Already subscribed."
+msgstr "Już zasubskrybowano."
+
+#: class-simplechimp.php:84
+msgid "Thank you for subscribing."
+msgstr "Dziękujemy za prenumeratę!"

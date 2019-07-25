@@ -23,9 +23,10 @@ class MailChimp {
 	 * @param string $api_key Your MailChimp API key
 	 */
 	function __construct( $api_key ) {
-		$this->api_key = $api_key;
+
+		$this->api_key        = $api_key;
 		list( , $datacentre ) = explode( '-', $this->api_key );
-		$this->api_endpoint = str_replace( '<dc>', $datacentre, $this->api_endpoint );
+		$this->api_endpoint   = str_replace( '<dc>', $datacentre, $this->api_endpoint );
 	}
 
 	/**
@@ -47,12 +48,16 @@ class MailChimp {
 	 * @return array|WP_Error assoc array of decoded result or WP_Error if the request failed
 	 */
 	private function _raw_request( $method, $body = array() ) {
-		$body['apikey'] = $this->api_key;
-		$args['body'] = json_encode( $body );
-		$args['timeout'] = 10;
+
+		$body['apikey']    = $this->api_key;
+		$args['body']      = json_encode( $body );
+		$args['timeout']   = 10;
 		$args['sslverify'] = $this->verify_ssl;
+
 		$url = $this->api_endpoint.'/'.$method.'.json';
+
 		$response = wp_remote_post( $url, $args );
+
 		return $response;
 	}
 
