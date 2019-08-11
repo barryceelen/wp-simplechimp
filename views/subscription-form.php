@@ -10,6 +10,10 @@
 	<span class="simplechimp-feedback<?php echo esc_attr( $class ); ?>"<?php echo $style; ?>>
 		<?php echo wp_kses_post( $message ); ?>
 	</span>
-	<input type="email" name="simplechimp_email" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_html( $options['labels']['placeholder'] ); ?>">
-	<button name="simplechimp_submit" type="submit" /><?php echo esc_html( $options['labels']['submit'] ); ?></button>
+	<div class="simplechimp-input-wrap">
+		<input type="email" name="simplechimp_email" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_html( $options['labels']['placeholder'] ); ?>">
+	</div>
+	<div class="simplechimp-submit-wrap">
+		<button name="simplechimp_submit" type="submit" /><span><?php echo esc_html( $options['labels']['submit'] ); ?></span></button>
+	</div>
 </form>
